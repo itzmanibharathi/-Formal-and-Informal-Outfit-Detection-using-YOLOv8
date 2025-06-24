@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Attendance System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+        }
+
+        h1, h3, p {
+            color: #00ffff;
+        }
+
+        form {
+            border: 2px solid rgba(0, 255, 255, 0.6);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 255, 255, 0.05);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+            margin-bottom: 30px;
+        }
+
+        input[type="file"] {
+            background-color: #222;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 25px;
+            border-radius: 20px;
+            border: 2px solid aqua;
+            background-color: transparent;
+            color: aqua;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: aqua;
+            color: #000;
+        }
+
+        img {
+            max-height: 200px;
+            margin: 10px;
+            border-radius: 12px;
+            border: 2px solid aqua;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .result-box {
+            border: 1.5px solid aqua;
+            border-radius: 15px;
+            padding: 15px;
+            width: 60%;
+            max-width: 400px;
+            backdrop-filter: blur(5px);
+            display: flexbox;
+            background-color: rgba(0, 255, 255, 0.03);
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
+        }
+
+        .loader {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid aqua;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-top: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #loadingText {
+            color: aqua;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        #loaderContainer {
+            display: none;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <h1>Smart Attendance System</h1>
+    
+    <form method="post" enctype="multipart/form-data" onsubmit="showLoader()">
+        <input type="file" name="image" required><br>
+        <button type="submit">Check Attendance</button>
+    </form>
+
+    <div id="loaderContainer">
+        <div class="loader"></div>
+        <div id="loadingText">Analyzing Image...</div>
+    </div>
+
+    {% if original %}
+    <div class="result-box">
+        <h3>Original Image</h3>
+        <img src="{{ original }}" alt="Original Image">
+        <p><strong>Class Detected:</strong> {{ class_detected }}</p>
+        <p><strong>Status:</strong> {{ status }}</p>
+    </div>
+    {% endif %}
+
+    <script>
+        function showLoader() {
+            document.getElementById('loaderContainer').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
